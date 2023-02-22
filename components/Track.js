@@ -2,27 +2,29 @@ import {
     View,
     Text,
     Image,
+    Pressable,
 } from "react-native";
 import { millisToMinutesAndSeconds } from "../utils";
 import { Themes } from "../assets/Themes";
+import { Ionicons } from '@expo/vector-icons';
 import styles from './styles';
 
-const Track = ({ idx, info }) => {
+const Track = ({ navigation, info }) => {
     const {
         songTitle,
         songArtists,
         albumName,
         imageUrl,
         duration,
+        previewUrl,
+        externalUrl
     } = info;
 
     return (
-        <View style={styles.track}>
-            <Text
-                style={{ color: Themes.colors.gray, width: 20, fontSize: 12 }}
-            >
-                {idx + 1}
-            </Text>
+        <Pressable onPress={() => navigation.navigate('details', {url: externalUrl, title: 'Song Details'})} style={styles.track}>
+            <Pressable onPress={() => navigation.navigate('preview', {url: previewUrl, title: 'Song Preview'})} style={{paddingRight: 10}}>
+                <Ionicons name="md-play-circle" size={20} color="green" />
+            </Pressable>
             <Image
                 style={{ width: 50, height: 50, marginRight: "2%" }}
                 source={{ uri: imageUrl }}
@@ -49,7 +51,7 @@ const Track = ({ idx, info }) => {
             <Text style={styles.text}>
                 {millisToMinutesAndSeconds(duration)}
             </Text>
-        </View>
+        </Pressable>
     );
 };
 

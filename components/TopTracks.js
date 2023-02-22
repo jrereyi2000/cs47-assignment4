@@ -3,7 +3,7 @@ import Header from './Header';
 import Track from './Track';
 import Separator from './Separator';
 
-const TopTracks = ({ tracks }) => {
+const TopTracks = ({ tracks, navigation }) => {
     return (
         <View
             style={{
@@ -15,8 +15,8 @@ const TopTracks = ({ tracks }) => {
             <FlatList
                 data={tracks}
                 keyExtractor={(track) => track.externalUrl}
-                renderItem={({ item, index }) => (
-                    <Track key={item.externalUrl} idx={index} info={item} />
+                renderItem={({ item }) => (
+                    <Track key={item.externalUrl} navigation={navigation} info={item} />
                 )}
                 ItemSeparatorComponent={<Separator />}
             />

@@ -1,6 +1,13 @@
 import {StyleSheet} from 'react-native';
+import { Themes } from '../assets/Themes';
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: Themes.colors.background,
+        justifyContent: "center",
+        alignItems: "center",
+        flex: 1,
+    },
     separator: {
         width: "100%",
         height: 10,

@@ -1,31 +1,41 @@
-import {
-    StyleSheet,
-    SafeAreaView,
-} from "react-native";
-import { useSpotifyAuth } from "./utils";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 import { Themes } from "./assets/Themes";
-import {TopTracks} from './components';
+import { HomeScreen, WebScreen } from "./screens";
 
-export default function App() {
-    // Pass in true to useSpotifyAuth to use the album ID (in env.js) instead of top tracks
-    const { token, tracks, getSpotifyAuth } = useSpotifyAuth();
+const Stack = createStackNavigator();
 
-    return (
-        <SafeAreaView style={styles.container}>
-            {token ? (
-                <TopTracks tracks={tracks} />
-            ) : (
-                <AuthButton onPress={getSpotifyAuth} />
-            )}
-        </SafeAreaView>
-    );
-}
-
-const styles = StyleSheet.create({
-    container: {
+const getOptions = (title) => ({
+    title,
+    headerBackTitle: "Back",
+    headerStyle: {
         backgroundColor: Themes.colors.background,
-        justifyContent: "center",
-        alignItems: "center",
-        flex: 1,
+    },
+    headerTitleStyle: {
+        color: "white",
     },
 });
+
+export default function App() {
+    return (
+        <NavigationContainer>
+            <Stack.Navigator>
+                <Stack.Screen
+                    name="main"
+                    options={{ headerShown: false }}
+                    component={HomeScreen}
+                />
+                <Stack.Screen
+                    name="details"
+                    component={WebScreen}
+                    options={getOptions('Song Details')}
+                />
+                <Stack.Screen
+                    name="preview"
+                    component={WebScreen}
+                    options={getOptions('Song Preview')}
+                />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
+}
